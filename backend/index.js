@@ -1,0 +1,32 @@
+import express from 'express'; 
+import dotenv from 'dotenv';
+import colors from 'colors';
+import { db } from './config/db.js';
+import servicesRoutes from './routes/servicesRoutes.js';
+
+// Cargar variables de entorno
+dotenv.config();
+
+// Configurar la app
+const app = express();
+
+// leer datos
+app.use(express.json());
+
+// Conectar a la base de datos
+db();
+
+// Definir una ruta
+// usamos un middleware
+app.use('/api/services', servicesRoutes);
+
+// Definir puerto
+// process.env.PORT es el puerto que se define en el archivo .env
+const PORT = process.env.PORT || 4000;
+
+// arrancar la app  
+app.listen(PORT, () => {
+    console.log(colors.blue.bgMagenta.bold(`Server is running on port ${PORT}`));
+});    
+
+

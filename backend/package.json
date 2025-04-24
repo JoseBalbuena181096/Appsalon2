@@ -1,0 +1,22 @@
+{
+  "name": "appsalon_menv_backend",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Backend para AppSalon en MENV",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "author": "Jose Balbuena Palma",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  },
+  "dependencies": {
+    "colors": "^1.4.0",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "mongoose": "^8.13.2"
+  }
+}
