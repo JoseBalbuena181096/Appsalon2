@@ -70,9 +70,34 @@ const updateService = async (req, res) => {
     }
 }
 
+const deleteService = async (req, res) => {
+    const {id} = req.params;
+    
+    // Validar un object id
+    if(validateObjectId(id, res)) return;
+    
+    // validar que exista
+    const service = await Services.findById(id);
+    if(!service){
+        return handleNotFoundError('El servicio no existe', res);
+    }
+    
+    try{
+        const result = await service.deleteOne();
+        res.status(200).json({
+            msg: 'Servicio eliminado correctamente',
+            result
+        });
+    }
+    catch(error){
+        console.log(error);
+    }
+}
+
 export {
     createService,
     getServices,
     getServiceById,
-    updateService
+    updateService,
+    deleteService
 }
