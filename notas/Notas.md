@@ -229,6 +229,54 @@ Para enviar peticiones de tipo POST:
 ![alt text](image-1.png)
 
 
+### Seeder
 
+Un seeder es un script que permite cargar datos de prueba en la base de datos.
 
+Ejecutar el seeder par importar datos:
 
+```
+npm run seed:import
+```
+
+Ejecutar el seeder par eliminar datos:
+
+```
+npm run seed:destroy
+```
+
+Ejecutar el seeder par eliminar datos:
+
+```
+npm run seed:destroy
+```
+
+Configuracion del seeder:
+
+```js
+{
+  "name": "appsalon_menv_backend",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Backend para AppSalon en MENV",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "seed": "node data/seed.js",
+    "seed:import": "node data/seed.js --import",
+    "seed:destroy": "node data/seed.js --destroy"
+  },
+  "author": "Jose Balbuena Palma",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  },
+  "dependencies": {
+    "colors": "^1.4.0",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "mongoose": "^8.13.2"
+  }
+}
+```
