@@ -1,6 +1,4 @@
-import { services } from '../data/beautyServices.js';
 import Services from '../models/Services.js';
-import mongoose from 'mongoose';
 import { validateObjectId, handleNotFoundError } from '../utils/index.js';
 
 
@@ -24,8 +22,16 @@ const createService = async (req, res)=>{
     }
 }
 
-const getServices = (req, res)=>{
-    res.json(services);
+const getServices = async(req, res)=>{
+   try {
+        const services = await Services.find();
+        res.status(200).json(services);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            msg: error.message
+        });
+    }
 }
 
 const getServiceById = async(req, res)=>{
