@@ -1,5 +1,9 @@
 # Ignorar node_module
 
 backend/node_modules/
+frontend/node_modules/
 backend/.env
 root
+
+frontend/.env
+frontend/.vscode
