@@ -280,3 +280,89 @@ Configuracion del seeder:
   }
 }
 ```
+
+### ¿Que son los CORS?
+
+CORS, por sus sigles en ingle´s   Cross-Origin Resource Sharing(Compartir recursos entre diferentes origenes), es un mecanismo de seguridad utilizada en los navegadores web para controlar la solicitud de recursos entre diferentes dominios. En escencia , CORS es una politica de seguridad implementada en el lado del servidor que permite o deniega las solicitudes de recursos web de un origen cruzado.
+
+### Origen Cruzado o Cross-Origin
+Cuando un recurso(como una fuente, una imagen o una hoja de estilo) se solicita desde un dominio o puerto diferente al del origen del recurso actual, se considera una solicitud de origen cruzado. Antes de que se implementaran CORS, los navegadores web modernos restringian automaticamente las peticiones de origen cruzado, para prevenir ataques de seguridad, como el secuestro de sesiones y la inyeccion de scripts maliciosos.
+
+![alt text](image-2.png)
+
+### Ventajas de CORS.
+Seguridad: CORS permite a los servidores tener un control más granular sobre qué dominios pueden acceser a los recursos.
+Esto reduce la posibilidad de ataques malisiosos de origen cruzado.
+
+Acceso controlado a recursos: CORS permite a laos sitios web controlar que recursos estan disponibles para ser solicitados por dominios externos y que recursos estan disponibles para ser solicitados por dominios externos y que recursos están restringidos. Esto brinda mayor control sobre los datos y recursos del sitio web.
+
+Interoperabilidad: CORS facilita el intercambio de datos y recursos entre diferentes dominios. Esto es particularmente útil en situaciones en las que una página web necesita cargar recursos de múltiples dominios para funcionar correctamente, como los casos de uso de una API o la carga de fuentes externas.
+
+Instalacion de CORS:
+```
+npm i cors
+```
+
+Configuracion de CORS:
+```
+const cors = require('cors');
+
+app.use(cors());
+```
+
+Para agregar cors para postman:
+
+Agregamos en el index.js
+```js
+const whitelist = [process.env.FRONTEND_URL];
+
+if(process.argv[2] === '--postman') {
+    whitelist.push(undefined);
+}
+
+const corsOptions = {
+    origin: function (origin, callback) {
+        if (whitelist.includes(origin)) {
+            // Permitir la conexion
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    }
+};
+
+app.use(cors(corsOptions));
+```
+
+y en el package.json
+
+```json
+{
+  "name": "appsalon_menv_backend",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Backend para AppSalon en MENV",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "dev:postman": "nodemon index.js --postman",
+    "seed": "node data/seed.js",
+    "seed:import": "node data/seed.js --import",
+    "seed:destroy": "node data/seed.js --destroy"
+  },
+  "author": "Jose Balbuena Palma",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  },
+  "dependencies": {
+    "colors": "^1.4.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "mongoose": "^8.13.2"
+  }
+}
+
+```

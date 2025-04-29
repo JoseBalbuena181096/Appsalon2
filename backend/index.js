@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import colors from 'colors';
 import { db } from './config/db.js';
 import servicesRoutes from './routes/servicesRoutes.js';
+import cors from 'cors';
 
 // Cargar variables de entorno
 dotenv.config();
@@ -15,6 +16,27 @@ app.use(express.json());
 
 // Conectar a la base de datos
 db();
+
+// Configurar CORS
+
+const whitelist = [process.env.FRONTEND_URL];
+
+if(process.argv[2] === '--postman') {
+    whitelist.push(undefined);
+}
+
+const corsOptions = {
+    origin: function (origin, callback) {
+        if (whitelist.includes(origin)) {
+            // Permitir la conexion
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    }
+};
+
+app.use(cors(corsOptions));
 
 // Definir una ruta
 // usamos un middleware
