@@ -5,6 +5,7 @@ import {ref, computed} from 'vue';
 export const useAppointmentsStore = defineStore('appointments', () => {
 
     const services = ref([]);
+    const date = ref('');
     
     function onServicesSelected(service) {
         if(services.value.some(selectedService => selectedService._id === service._id)){
@@ -31,6 +32,7 @@ export const useAppointmentsStore = defineStore('appointments', () => {
         onServicesSelected,
         isServiceSelected,
         services,
+        date,
         totalAmount,
         noServicesSelected    
     }    
