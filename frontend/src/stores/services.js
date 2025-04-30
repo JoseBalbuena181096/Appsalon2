@@ -8,7 +8,7 @@ export const useServicesStore = defineStore('services', () => {
     onMounted(async () => {
         try {
             const {data} = await ServicesAPI.all();
-            console.log(data);
+            //console.log(data);
             services.value = data;
         } catch (error) {
             console.error(`Error fetching services: ${error.message}`);
