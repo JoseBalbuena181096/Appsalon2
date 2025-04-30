@@ -37,12 +37,4 @@
             </span>
         </p>
     </div>
-
-    <p class="text-2xl text-right text-white text-lg">
-        Total a pagar:
-        <span class="font-black text-blue-500">
-            {{ formatCurrency(appointments.totalAmount) }}
-        </span> 
-    </p>
-
 </template>
