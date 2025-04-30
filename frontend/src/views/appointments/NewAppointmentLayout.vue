@@ -19,5 +19,7 @@
             Cita y Resumen
         </RouterLink>
     </nav>
-    <RouterView/>
+    <div class="space-y-8">
+        <RouterView/>
+    </div>
 </template>
