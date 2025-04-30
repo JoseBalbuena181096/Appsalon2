@@ -22,10 +22,20 @@ export const useAppointmentsStore = defineStore('appointments', () => {
     const isServiceSelected = computed(() => {
         return id => services.value.some(service => service._id === id);
     });
+
+    const noServicesSelected = computed(() => {
+        return services.value.length === 0;
+    });
+
+    const totalAmount = computed(() => {
+        return services.value.reduce((total, service) => total + service.price, 0);
+    });
     
     return {
+        services,
+        totalAmount,    
         onServicesSelected,
         isServiceSelected,
-        services    
+        noServicesSelected
     }    
 });
