@@ -23,9 +23,12 @@ export const useAppointmentsStore = defineStore('appointments', () => {
         return id => services.value.some(service => service._id === id);
     });
     
-    return {
+    const totalAmount = computed(() => services.value.reduce((total, service) => total + service.price, 0));
+
+    return {  
         onServicesSelected,
         isServiceSelected,
-        services    
+        services,
+        totalAmount    
     }    
 });
