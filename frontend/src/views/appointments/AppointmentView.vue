@@ -18,8 +18,11 @@
     <h3 class="text-3xl font-extrabold text-white">
         Servicios
     </h3>
-
+    <p v-if="appointments.noServicesSelected" class="text-white text-2xl text-center">
+        No hay servicios seleccionados
+    </p>
     <div
+        v-else
         class="grid gap-5"
     >
         <SelectedService 
@@ -27,6 +30,12 @@
             :service="service"
             :key="service._id"
         />
+        <p class="text-right text-white text-2xl">
+            Total a pagar:
+            <span class="font-black text-blue-500">
+                {{ formatCurrency(appointments.totalAmount) }}
+            </span>
+        </p>
     </div>
 
     <p class="text-2xl text-right text-white text-lg">
