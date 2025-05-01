@@ -12,6 +12,11 @@
         month: 'MMM'
     });
     
+    const disableDate = (date) => {
+        const today = new Date();
+        return date < today || date.getMonth() !== today.getMonth() + 1 || [0,6].includes(date.getDay());
+    }
+
 </script>
 
 
@@ -50,7 +55,8 @@
         </h3>
         <div class="lg:flex gap-5 items-start">
             <div class="w-full lg:w-96 bg-white flex justify-center rounded-lg p-5">
-                <VueTailwindDatepicker 
+                <VueTailwindDatepicker
+                    :disable-date="disableDate" 
                     i18n="es-mx"
                     as-single
                     no-input
