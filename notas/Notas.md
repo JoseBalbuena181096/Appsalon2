@@ -366,3 +366,31 @@ y en el package.json
 }
 
 ```
+
+### Autenticación y Registro de Usuarios
+
+#### Registro de Usuarios
+Para registar a los usuarios es importante hacerlo con algo que sea único: 
+Targeta de crédito, número de celular o email.
+
+Las cuentas siempre deben de confirmarse antes de darle acceso al usuario.
+
+#### Principios de autenticación 
+Existen diferentes formas de autenticar usuarios:
+
+-    Con algo que el usaurio recuarda(email, password)
+-    Con un dispositivo(Token, Celular, Mensaje)
+-    Enlace mágico a algo que solo el usuario debe tener acceso.
+-    Con algo físico(Huella, cara)
+
+#### Algoritmos de autenticación
+Email y password deben de coincidir.
+
+Otras validaciones incluyen: Verificar si el usuario existe, si el usuario  existe pero el password es incorrecto, si ambos son correctos autenticar al usuario.
+
+#### Autenticación y Segiridad
+
+Los passwords siempre deben estar hasheados; esto evitará que un log en el servidor o un acceso no deseado a la base de datos comprometa las cuentas de nuestros usuarios.
+
+Los passwords hasheados no se pueden revertir, entonces debemos encontrar una forma de darle al usario instrucciones para recuperar su acceso.
+

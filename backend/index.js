@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import colors from 'colors';
 import { db } from './config/db.js';
 import servicesRoutes from './routes/servicesRoutes.js';
+import authRoutes from './routes/authRoutes.js';
 import cors from 'cors';
 
 // Cargar variables de entorno
@@ -41,6 +42,7 @@ app.use(cors(corsOptions));
 // Definir una ruta
 // usamos un middleware
 app.use('/api/services', servicesRoutes);
+app.use('/api/auth', authRoutes);
 
 // Definir puerto
 // process.env.PORT es el puerto que se define en el archivo .env
