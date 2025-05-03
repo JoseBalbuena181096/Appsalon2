@@ -401,3 +401,11 @@ BCRYPT es un algoritmo de hasheo que permite hashear passwords.
 ```
 npm i bcrypt
 ```
+
+### Nodemailer
+
+Nodemailer es un paquete que permite enviar correos electrónicos.
+
+```
+npm i nodemailer
+```
