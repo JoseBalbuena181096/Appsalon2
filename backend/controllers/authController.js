@@ -29,6 +29,8 @@ const register = async(req, res) => {
         });
     }
 
+     
+
     try {
         const user = await User(req.body);
         await user.save();

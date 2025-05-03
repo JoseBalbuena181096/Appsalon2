@@ -394,3 +394,10 @@ Los passwords siempre deben estar hasheados; esto evitará que un log en el serv
 
 Los passwords hasheados no se pueden revertir, entonces debemos encontrar una forma de darle al usario instrucciones para recuperar su acceso.
 
+### BCRYPT
+
+BCRYPT es un algoritmo de hasheo que permite hashear passwords.
+
+```
+npm i bcrypt
+```
