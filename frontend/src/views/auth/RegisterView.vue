@@ -27,6 +27,44 @@
                 length: 'El nombre debe tener al menos 3 caracteres'
             }"
         />
+
+        <FormKit
+            type="email"
+            label="Email"
+            name="email"
+            placeholder="Email de registro"
+            validation="required | email"
+            :validation-messages="{
+                required: 'El email es obligatorio',
+                email: 'El email debe ser valido'
+            }"
+        />
+
+        <FormKit
+            type="password"
+            label="Password"
+            name="password"
+            placeholder="Password de Usuario -  Min 8 Caracteres"
+            validation="required | length:8"
+            :validation-messages="{
+                required: 'El password es obligatorio',
+                length: 'El password debe tener al menos 8 caracteres'
+            }"
+        />
+
+        <FormKit
+            type="password"
+            label="Repite tu Password"
+            name="password_confirm"
+            placeholder="Repite el password"
+            validation="required | confirm"
+            :validation-messages="{
+                required: 'El password de confirmación es obligatorio',
+                confirm: 'Los passwords no coinciden'
+            }"
+        />
+        
+
         <FormKit
             type="submit"
         >
