@@ -409,3 +409,12 @@ Nodemailer es un paquete que permite enviar correos electrónicos.
 ```
 npm i nodemailer
 ```
+
+### Instalar formkit
+
+Formkit es un paquete que permite crear formularios.
+
+```
+npm i @formkit/vue @formkit/themes
+```
+
