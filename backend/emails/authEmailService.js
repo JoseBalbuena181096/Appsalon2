@@ -10,15 +10,16 @@ export async function sendEmailVerification({name, email, token}){
     );
     // enviar el correo
     const info = await transporter.sendMail({
-        from: "AppSalon",
+        from: "AppSalon <cuentas@appsalon.com>",
         to: email,
         subject: 'Confirmar tu cuenta de AppSalon',
         text: 'Confirma tu cuenta en AppSalon',
         html: `<h1>Confirma tu cuenta en AppSalon</h1>
         <p>Para confirmar tu cuenta, por favor, da click en el siguiente enlace:</p>
-        <a href="http://localhost:4000/api/auth/verify/${token}">Confirmar Cuenta</a>
+        <a href="${process.env.FRONTEND_URL}/auth/confirmar-cuenta/${token}">Confirmar Cuenta</a>
         <p>Si tu no creaste esta cuenta, puedes ignorar este correo</p>
         `
     });
+
     console.log('Correo enviado', info.messageId);
 }
