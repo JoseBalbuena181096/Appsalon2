@@ -418,3 +418,217 @@ Formkit es un paquete que permite crear formularios.
 npm i @formkit/vue @formkit/themes
 ```
 
+### Instalar vue-toast-notification
+
+Toast notification es un paquete que permite mostrar notificaciones.
+
+```
+npm i vue-toast-notification
+```
+
+# State Management en Vue 3: State vs Pinia y Composables vs Inject/Provide
+
+## State vs Pinia
+
+### Opciones para manejar el estado
+
+**State Local (Composition API)**
+- **Definición**: Estado manejado dentro de un componente usando `ref()`, `reactive()` o `useState()`.
+- **Casos de uso**:
+  - Estado que solo pertenece a un componente específico
+  - Datos temporales no compartidos
+  - Formularios simples o interacciones de UI aisladas
+
+**Pinia**
+- **Definición**: Biblioteca oficial de manejo de estado global para Vue 3 (reemplazó a Vuex).
+- **Características clave**:
+  - Tipado completo con TypeScript
+  - API más simple e intuitiva que Vuex
+  - Soporta el Devtools de Vue
+  - Manejo automático de código dividido (code-splitting)
+
+### Cuándo usar cada uno
+
+**Usar State Local cuando**:
+- El estado solo se necesita en un componente
+- La jerarquía de componentes es simple
+- No hay necesidad de persistencia o compartir estado entre componentes distantes
+
+**Usar Pinia cuando**:
+- Necesitas estado compartido entre múltiples componentes
+- Requieres persistencia de estado
+- Tienes lógica de negocio compleja
+- Necesitas depurar el flujo de estado
+- Trabajas con aplicaciones de escala media a grande
+
+### Ejemplo de código
+
+**State Local con Composition API:**
+```vue
+<script setup>
+import { ref, reactive } from 'vue'
+
+// Estado simple
+const count = ref(0)
+
+// Estado complejo
+const user = reactive({
+  name: 'María',
+  age: 28,
+  preferences: {
+    theme: 'dark'
+  }
+})
+
+function increment() {
+  count.value++
+}
+</script>
+```
+
+**Pinia:**
+```javascript
+// stores/counter.js
+import { defineStore } from 'pinia'
+
+export const useCounterStore = defineStore('counter', {
+  state: () => ({
+    count: 0
+  }),
+  actions: {
+    increment() {
+      this.count++
+    }
+  },
+  getters: {
+    doubleCount: (state) => state.count * 2
+  }
+})
+```
+
+```vue
+<script setup>
+import { useCounterStore } from '@/stores/counter'
+
+const counterStore = useCounterStore()
+
+function handleClick() {
+  counterStore.increment()
+}
+</script>
+
+<template>
+  <div>
+    Contador: {{ counterStore.count }}
+    Doble: {{ counterStore.doubleCount }}
+    <button @click="handleClick">Incrementar</button>
+  </div>
+</template>
+```
+
+## Composables vs Inject/Provide
+
+### Diferencias principales
+
+**Composables**
+- **Definición**: Funciones que encapsulan y reutilizan lógica con estado.
+- **Características**:
+  - Son independientes del árbol de componentes
+  - Reutilizables en cualquier componente
+  - Siguen el patrón de "use" (ej: `useUser()`, `useNavigation()`)
+
+**Inject/Provide**
+- **Definición**: Mecanismo para pasar datos desde componentes padres a descendientes profundos sin props drilling.
+- **Características**:
+  - Dependiente del árbol de componentes
+  - El componente que provee debe estar en la jerarquía superior
+  - No necesita pasar por componentes intermedios
+
+### Cuándo usar cada uno
+
+**Usar Composables cuando**:
+- Necesitas reutilizar lógica entre componentes no relacionados
+- Quieres encapsular operaciones complejas
+- Buscas una solución independiente del árbol de componentes
+- Necesitas manejar efectos secundarios (llamadas API, temporizadores)
+
+**Usar Inject/Provide cuando**:
+- Tienes datos que deben compartirse entre componentes padre e hijos distantes
+- Quieres evitar el "props drilling" (pasar props a través de múltiples niveles)
+- Necesitas compartir datos dentro de una rama específica del árbol de componentes
+- Trabajas con temas, configuración o contexto de la aplicación
+
+### Ejemplo de código
+
+**Composable:**
+```javascript
+// composables/useFetch.js
+import { ref, onMounted } from 'vue'
+
+export function useFetch(url) {
+  const data = ref(null)
+  const error = ref(null)
+  const loading = ref(true)
+
+  onMounted(async () => {
+    try {
+      const response = await fetch(url)
+      data.value = await response.json()
+    } catch (e) {
+      error.value = e
+    } finally {
+      loading.value = false
+    }
+  })
+
+  return { data, error, loading }
+}
+```
+
+```vue
+<script setup>
+import { useFetch } from '@/composables/useFetch'
+
+const { data, error, loading } = useFetch('https://api.example.com/users')
+</script>
+```
+
+**Inject/Provide:**
+```vue
+<!-- App.vue (componente raíz) -->
+<script setup>
+import { provide, ref } from 'vue'
+
+const theme = ref('dark')
+function toggleTheme() {
+  theme.value = theme.value === 'dark' ? 'light' : 'dark'
+}
+
+provide('theme', { theme, toggleTheme })
+</script>
+
+<!-- Un componente profundamente anidado -->
+<script setup>
+import { inject } from 'vue'
+
+const { theme, toggleTheme } = inject('theme')
+</script>
+
+<template>
+  <div :class="theme">
+    <button @click="toggleTheme">Cambiar tema</button>
+  </div>
+</template>
+```
+
+## Combinando soluciones
+
+En aplicaciones reales, normalmente combinarás estas soluciones:
+
+1. **Estado local** para datos específicos de componentes
+2. **Pinia** para estado global compartido
+3. **Composables** para lógica reutilizable
+4. **Inject/Provide** para contexto compartido en subárboles específicos
+
+La clave está en elegir la herramienta adecuada según la complejidad y los requisitos de comunicación entre componentes de tu aplicación.
+

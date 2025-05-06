@@ -1,16 +1,29 @@
 <script setup>
+    import {inject} from "vue";
+    import {reset} from '@formkit/vue';
     import AuthAPI from "../../api/AuthAPI";
     
-    const handleSubmit = async ({password_confirm, ...data}) => {
+    const toast = inject('toast');
+    
+
+    const handleSubmit = async ({password_confirm, ...formData}) => {
         try {
-            const data_  = await AuthAPI.register(data);
-            console.log(data_);
+            const {data}  = await AuthAPI.register(formData);
+            // console.log(data);
+            toast.open({
+                message: data.msg,
+                type: 'success',
+            });
+            reset('registerForm');
         } catch (error) {
-            console.log(error.response.data);
+            // console.log(error.response.data.msg);
+            toast.open({
+                message: error.response.data.msg,
+                type: 'error',
+            });
+            reset('registerForm');
         }
     }
-
-    
 </script>
 
 <template>
@@ -23,6 +36,7 @@
         Crear una cuenta en AppSalon
     </p>
     <FormKit
+        id="registerForm"
         type="form"
         :actions="false"
         incomplete-message="No se pudo enviar, revisa las notificaciones"
