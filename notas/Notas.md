@@ -686,3 +686,7 @@ Ventajas de usar cookies:
 Desventajas de usar cookies:
 - Esta limitada a 4kb
 - Son mas complejas que localStorage
+
+### Un middleware
+Un middleware es una funcion que se ejecuta antes de que se ejecute otra funcion.
+En node un middleware es la forma qn la que se van ejecutando las diferentes funciones, se ejecutan antes en cada request
