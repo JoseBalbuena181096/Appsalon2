@@ -669,3 +669,20 @@ En resumen, JWT proporciona un mecanismo seguro y eficiente para transmitir info
 $cd backend
 $npm install jsonwebtoken
 ```
+
+### Almacenamiento de los JWT en el frontend
+Para poder almacenar el JWT en el frontend se puede usar localStorage o cookies.
+
+Ventajas de usar localStorage:
+- El api es simple que la de las cookies, tanto para escribir como para obtener datos.
+- No se borran a menos que se indique, mas persistente
+- Mayor almacenamiento que las cookies
+
+
+Ventajas de usar cookies:
+- Puedes añadir que se envien por https
+- Desactivar js, qu solamente un lenguaje que se ejecute en el servidor pueda modificarlo
+
+Desventajas de usar cookies:
+- Esta limitada a 4kb
+- Son mas complejas que localStorage
