@@ -1,5 +1,7 @@
 <script setup>
-        
+   import {useUserStore} from '../../stores/user';
+   const user = useUserStore();     
+
 </script>
 
 
@@ -8,7 +10,7 @@
         <h1 class="text-2xl lg:text-6xl font-black text-white"> App Salón</h1>
         <div class="flex flex-col space-y-5">
             <div class="flex gap-2 items-center">
-                <p class="text-white text-right">Hola: Usuario</p>
+                <p class="text-white text-right">Hola: {{ user.getUserName }}</p>
                 <button class="bg-red-600  hover:bg-red-700 py-2 px-4 rounded-lg text-white uppercase text-xs font-extrabold">Cerrar Sesión</button>
             </div>
             <nav 
