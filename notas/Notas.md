@@ -632,3 +632,34 @@ En aplicaciones reales, normalmente combinarás estas soluciones:
 
 La clave está en elegir la herramienta adecuada según la complejidad y los requisitos de comunicación entre componentes de tu aplicación.
 
+### JSON WEB TOKEN
+
+JSON Web Token (JWT) es un estándar (RFC 7519) que define una forma de transmitir información entre partes como un objeto JSON. Es un estándar abierto que define un formato compacto y seguro para trasmitir información entre dos partes de manera segura como un Objeto JSON. Está compuesto por tres secciones separadas por puntos: el encabezado(header), los datos(payload) y la firma(signature). 
+
+
+### Autencticación en aplicaciones Monoliticas tradicionales
+
+El usuario ingrese su email y password, se envian al servidor se inicia la seción, y si todo esta bien se inicia la Sesión en el servidor.
+
+![alt text](image-3.png)
+
+### Autenticacion en aplicaciones con el backend y frontend separados
+El usuario encia su email y password si todo esta bien el servidor valida, y envia de regreso al frontend un JSON WEB TOKEN JWT. 
+![alt text](image-4.png)
+
+Se que tu eres la persona y que iniciaste la sesion ten un token valido, el usuario en el frontend se comunica con el baquen pasando el JWT en cada request.  Si el JWT es valido el backend responde con los datos del usuario, dando le acceso a estos. 
+![alt text](image-5.png)
+Si el JWT es invalido o expiro el backend responde con un error y el usuario se desloguea.
+
+### Las ventajas de usar JWT
+
+La seguridad: JWT utiliza algoritmos de firma digital para asegurar que los datos no han sido alterados durante la trasmisión. Esto garantiza la integridad de la información y permite a las  partes confiar en su validez.
+
+Autenticación y autorización: JWT se utiliza comúnmente para autenticar usuarios y permitirles acceder  a los recursos protegidos. Una vez que un usuario ha sido autenticado correctamente, se le proporciona un JWT que contiene la información que puede verificar la validez del token y autorizar o restringir el acceso a ciertos recursos.
+
+Transferencia eficiente de datos: JWT es un formato compacto que se puede transmitir fácilmente a través de diferentes medios, como encabezados HTTP, URL, o incluso en el cuerpo de una solicitud HTTP. Esto lo hace adecuado para su uso en  aplicaciones web y servicios de API.
+
+Stateless(sin estado): Los JWT son "sin estado", lo que significa que la informació nesesaria para autenticar y autorizar a un usuario se encuentra directamente en el token. Esto elimina  la necesidad de almacenar información de sesión en el servidor,  lo que facilita la esaclabilidad de las aplicaciones distribuidas.
+
+En resumen, JWT proporciona un mecanismo seguro y eficiente para transmitir información entre dos partes, autenticar usuarios y autorizar el acceso a recursos protegidos en aplicaciones web y servicios de su API. Su naturaleza compacta, seguridad y facilidad de uso lo convierten en una opción popular para la implementación de sistemas de autenticación y autorización.
+
