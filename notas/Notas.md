@@ -663,3 +663,9 @@ Stateless(sin estado): Los JWT son "sin estado", lo que significa que la informa
 
 En resumen, JWT proporciona un mecanismo seguro y eficiente para transmitir información entre dos partes, autenticar usuarios y autorizar el acceso a recursos protegidos en aplicaciones web y servicios de su API. Su naturaleza compacta, seguridad y facilidad de uso lo convierten en una opción popular para la implementación de sistemas de autenticación y autorización.
 
+### Instalar jsonwebtoken en el backend
+
+```bash
+$cd backend
+$npm install jsonwebtoken
+```
