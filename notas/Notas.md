@@ -690,3 +690,11 @@ Desventajas de usar cookies:
 ### Un middleware
 Un middleware es una funcion que se ejecuta antes de que se ejecute otra funcion.
 En node un middleware es la forma qn la que se van ejecutando las diferentes funciones, se ejecutan antes en cada request
+
+###  Date-fns
+Date-fns es una libreria que permite formatear fechas tanto en el backend como en el frontend.
+
+```bash
+$cd backend
+$npm install date-fns
+```
