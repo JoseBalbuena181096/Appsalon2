@@ -64,7 +64,7 @@
                     :formatter="formatter"
                 />
             </div>
-            <div class="flex-1 grid grid-cols-1 xl:grid-cols-2 gap-5 mt-10 lg:mt-0">
+            <div v-if="appointments.isDateSelected" class="flex-1 grid grid-cols-1 xl:grid-cols-2 gap-5 mt-10 lg:mt-0">
                 <button
                     v-for="hour in appointments.hours"
                     class="block text-blue-500 rounded-lg text-xs font-black p-3"

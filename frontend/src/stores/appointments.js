@@ -1,5 +1,5 @@
 import {defineStore} from 'pinia';
-import {ref, computed, onMounted, inject} from 'vue';
+import {ref, computed, onMounted, inject, watch} from 'vue';
 import AppointmentAPI from '../api/AppointmentAPI';
 import { converToISO } from '../helpers/date';
 import { useRouter } from 'vue-router';
@@ -19,6 +19,14 @@ export const useAppointmentsStore = defineStore('appointments', () => {
         const endHour = 19;
         for(let hour = startHour; hour <= endHour; hour++){
             hours.value.push(hour + ':00');
+        }
+    });
+    watch(date, async () => {
+        try{
+            const {data} = await AppointmentAPI.getByDate(date.value);
+            console.log(data);
+        }catch(error){
+            console.error(`Error fetching appointments: ${error.message}`);
         }
     });
 
@@ -79,6 +87,10 @@ export const useAppointmentsStore = defineStore('appointments', () => {
         return services.value.length && date.value.length && time.value.length;
     });
 
+    const isDateSelected = computed(() => {
+        return date.value ? true : false;
+    });
+
     return {  
         onServicesSelected,
         isServiceSelected,
@@ -89,6 +101,7 @@ export const useAppointmentsStore = defineStore('appointments', () => {
         hours,
         noServicesSelected,
         isValidReservation,
-        createAppointment    
+        createAppointment,
+        isDateSelected
     }    
 });
