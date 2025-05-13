@@ -5,7 +5,7 @@ export default {
         const token = localStorage.getItem('AUTH_TOKEN');
         return api.post('/appointments', data, {
             headers: {
-                'Authorization': `Bearer ${token}`
+                Authorization : `Bearer ${token}`
             }
         });
     }
