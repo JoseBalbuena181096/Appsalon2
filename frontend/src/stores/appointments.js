@@ -11,6 +11,8 @@ export const useAppointmentsStore = defineStore('appointments', () => {
     const date = ref('');
     const hours = ref([]);
     const time = ref('');
+    const appointmentsByDate = ref([]);
+
     const toast = inject('toast');
     const router = useRouter();    
 
@@ -21,13 +23,12 @@ export const useAppointmentsStore = defineStore('appointments', () => {
             hours.value.push(hour + ':00');
         }
     });
+
     watch(date, async () => {
-        try{
-            const {data} = await AppointmentAPI.getByDate(date.value);
-            console.log(data);
-        }catch(error){
-            console.error(`Error fetching appointments: ${error.message}`);
-        }
+        time.value = '';
+        if(date.value === '') return;
+        const {data} = await AppointmentAPI.getByDate(date.value);
+        appointmentsByDate.value = data.appointments;
     });
 
 
@@ -91,6 +92,12 @@ export const useAppointmentsStore = defineStore('appointments', () => {
         return date.value ? true : false;
     });
 
+    const disableTime = computed(() => {
+        return (hour) => {
+            return appointmentsByDate.value.find(appointment => appointment.time === hour);
+        }
+    });
+
     return {  
         onServicesSelected,
         isServiceSelected,
@@ -102,6 +109,7 @@ export const useAppointmentsStore = defineStore('appointments', () => {
         noServicesSelected,
         isValidReservation,
         createAppointment,
-        isDateSelected
+        isDateSelected,
+        disableTime
     }    
 });
