@@ -1,4 +1,5 @@
 import Appointment from "../models/Appointment.js";
+import {parse,formatISO, startOfDay, endOfDay, isValid} from 'date-fns';
 
 const createAppointment = async (req, res) => {
     try {
@@ -11,7 +12,7 @@ const createAppointment = async (req, res) => {
         const result = await newAppointment.save();
         
         // Responder al cliente
-        console.log("Cita creada correctamente");
+        //console.log("Cita creada correctamente");
         res.status(201).json({
             ok: true,
             msg: 'Cita creada correctamente',
@@ -26,6 +27,45 @@ const createAppointment = async (req, res) => {
     }    
 }
 
+const getAppointmentsByDate = async (req, res) => {
+    const {date} = req.query;
+    
+    try {
+        // Cambiar el formato de d/M/yyyy a dd/MM/yyyy
+        const newDate = parse(date, 'd/M/yyyy', new Date());
+        if(!isValid(newDate)){
+            return res.status(400).json({
+                ok: false,
+                msg: 'Fecha inválida'
+            });
+        }
+        
+        const isoDate = formatISO(newDate);
+        console.log('Fecha consultada:', isoDate);
+        
+        const appointments = await Appointment.find({
+            date: {
+                $gte: startOfDay(new Date(isoDate)),
+                $lte: endOfDay(new Date(isoDate))
+            }
+        }).select('time');
+        
+        res.json({
+            ok: true,
+            msg: 'Citas obtenidas correctamente',
+            appointments    
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Error al obtener citas',
+            error: error.message
+        });
+    }
+}
+
 export {
-    createAppointment
+    createAppointment,
+    getAppointmentsByDate
 }
