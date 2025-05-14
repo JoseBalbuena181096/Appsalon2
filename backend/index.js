@@ -8,6 +8,7 @@ import appointmentRoutes from './routes/appointmentRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 import cors from 'cors';
 
+
 // Cargar variables de entorno
 dotenv.config();
 
