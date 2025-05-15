@@ -8,6 +8,7 @@ export const useUserStore = defineStore('user', () => {
     const router = useRouter();
     const user = ref({});
     const userAppointments = ref([]);
+    const loading = ref(true);
 
     onMounted(async () => {
         try {
@@ -16,6 +17,9 @@ export const useUserStore = defineStore('user', () => {
             await getUserAppointments();
         } catch (error) {
             console.error(`Error: ${error.message}`);
+        }
+        finally{
+            loading.value = false;
         }
     });
 
@@ -43,5 +47,6 @@ export const useUserStore = defineStore('user', () => {
         logout,
         userAppointments,
         noAppointments,
+        loading
     }
 });
