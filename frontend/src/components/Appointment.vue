@@ -34,12 +34,13 @@
             <span class="text-blue-600">{{formatCurrency(appointment.totalAmount)}}</span>
         </p>
         <div class="flex gap-2 items-center">
-            <button 
+            <RouterLink 
+                :to="{ name: 'edit-appointment', params: { id: appointment._id } }" 
                 type="button" 
                 class="bg-slate-600 hover:bg-slate-700 rounded-lg text-white p-3 text-sm font-black flex-1 md:flex-none"
             >
                 Editar cita
-            </button>
+            </RouterLink>
             <button 
                 type="button" 
                 class="bg-red-600 hover:bg-red-700 rounded-lg text-white p-3 text-sm font-black flex-1 md:flex-none"
