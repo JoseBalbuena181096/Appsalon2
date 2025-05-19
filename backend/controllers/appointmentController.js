@@ -80,9 +80,6 @@ const getAppointmentById = async (req, res) => {
         return handleNotFoundError('La cita no existe', res);
     }
 
-    console.log(appointment.user.toString());
-    console.log(req.user._id.toString());
-
     if(appointment.user.toString() !== req.user._id.toString()){
         const error = new Error('Acceso denegado');
         return res.status(403).json({
@@ -94,8 +91,51 @@ const getAppointmentById = async (req, res) => {
     res.status(200).json(appointment);
 }
 
+const updateAppointment = async (req, res) => {
+    const {id} = req.params;
+    
+    // validar por ObjectId
+    if(validateObjectId(id, res)) return;
+
+    // validar que exista
+    const appointment = await Appointment.findById(id).populate('services');
+    if(!appointment){
+        return handleNotFoundError('La cita no existe', res);
+    }
+
+    if(appointment.user.toString() !== req.user._id.toString()){
+        const error = new Error('Acceso denegado');
+        return res.status(403).json({
+            msg: error.message
+        });
+    }
+
+    // actualizar la cita
+    const {date, time, totalAmount, services} = req.body;
+    appointment.date = date;
+    appointment.time = time;
+    appointment.totalAmount = totalAmount;
+    appointment.services = services;
+    try {
+        const result = await appointment.save();
+        res.status(200).json({
+            ok: true,
+            msg: 'Cita actualizada correctamente',
+            appointment: result
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Error al actualizar la cita',
+            error: error.message
+        });
+    }
+}
+
 export {
     createAppointment,
     getAppointmentsByDate,
-    getAppointmentById
+    getAppointmentById,
+    updateAppointment
 }
