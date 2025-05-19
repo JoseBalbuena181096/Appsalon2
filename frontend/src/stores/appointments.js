@@ -31,6 +31,12 @@ export const useAppointmentsStore = defineStore('appointments', () => {
         appointmentsByDate.value = data.appointments;
     });
 
+    function setSelectedAppointment(appointment){
+        // console.log("DESDE appointment", appointment);
+        services.value = appointment.services;
+        date.value = appointment.date;
+        time.value = appointment.time;
+    }
 
     function onServicesSelected(service) {
         if(services.value.some(selectedService => selectedService._id === service._id)){
@@ -110,6 +116,8 @@ export const useAppointmentsStore = defineStore('appointments', () => {
         isValidReservation,
         createAppointment,
         isDateSelected,
-        disableTime
+        disableTime,
+        setSelectedAppointment
     }    
 });
+
