@@ -79,6 +79,17 @@ const getAppointmentById = async (req, res) => {
     if(!appointment){
         return handleNotFoundError('La cita no existe', res);
     }
+
+    console.log(appointment.user.toString());
+    console.log(req.user._id.toString());
+
+    if(appointment.user.toString() !== req.user._id.toString()){
+        const error = new Error('Acceso denegado');
+        return res.status(403).json({
+            msg: error.message
+        });
+    }
+
     // retornar la cita
     res.status(200).json(appointment);
 }
