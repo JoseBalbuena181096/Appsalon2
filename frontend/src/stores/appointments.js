@@ -12,6 +12,7 @@ export const useAppointmentsStore = defineStore('appointments', () => {
     const hours = ref([]);
     const time = ref('');
     const appointmentsByDate = ref([]);
+    const appointmentId = ref('');
 
     const toast = inject('toast');
     const router = useRouter();    
@@ -29,12 +30,29 @@ export const useAppointmentsStore = defineStore('appointments', () => {
         if(date.value === '') return;
         const {data} = await AppointmentAPI.getByDate(date.value);
         appointmentsByDate.value = data.appointments;
+        if(appointmentId.value){
+            console.log("editando");
+            appointmentsByDate.value = data.appointments.filter(
+                appointment => appointment._id !== appointmentId.value
+            );
+            const currentAppointment = data.appointments.filter(
+                appointment => appointment._id === appointmentId.value
+            )[0].time;
+            time.value = currentAppointment;
+            //console.log(currentAppointment);
+        }
+        else{
+            //console.log("creando");
+            appointmentsByDate.value = data.appointments;
+        }
     });
 
     function setSelectedAppointment(appointment){
         services.value = appointment.services;
         date.value = convertToDDMMYYYY(appointment.date);
         time.value = appointment.time;
+        appointmentId.value = appointment._id;
+        console.log(appointmentId.value);
     }
 
     function onServicesSelected(service) {
