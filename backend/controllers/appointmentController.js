@@ -1,5 +1,7 @@
 import Appointment from "../models/Appointment.js";
 import {parse,formatISO, startOfDay, endOfDay, isValid} from 'date-fns';
+import { validateObjectId, handleNotFoundError } from '../utils/index.js';
+
 
 const createAppointment = async (req, res) => {
     try {
@@ -65,7 +67,24 @@ const getAppointmentsByDate = async (req, res) => {
     }
 }
 
+const getAppointmentById = async (req, res) => {
+
+    const {id} = req.params;
+    
+    // validar por ObjectId
+    if(validateObjectId(id, res)) return;
+
+    // validar que exista
+    const appointment = await Appointment.findById(id);
+    if(!appointment){
+        return handleNotFoundError('La cita no existe', res);
+    }
+    // retornar la cita
+    res.status(200).json(appointment);
+}
+
 export {
     createAppointment,
-    getAppointmentsByDate
+    getAppointmentsByDate,
+    getAppointmentById
 }
