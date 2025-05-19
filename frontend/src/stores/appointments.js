@@ -154,7 +154,8 @@ export const useAppointmentsStore = defineStore('appointments', () => {
         saveAppointment,
         isDateSelected,
         disableTime,
-        setSelectedAppointment
+        setSelectedAppointment,
+        clearAppointmentData
     }    
 });
 
