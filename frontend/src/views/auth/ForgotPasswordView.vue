@@ -1,5 +1,25 @@
 <script setup>
+    import AuthAPI from '../../api/AuthAPI';
+    import {inject} from 'vue';
+    const toast = inject('toast');
 
+
+    const handleSubmit = async ({email}) => {
+        try {
+            const {data} = await AuthAPI.forgotPassword({email});
+            console.log(data);
+            toast.open({
+                message: data.msg,
+                type: 'success'
+            });
+        } catch (error) {
+            console.log(error);
+            toast.open({
+                message: error.response.data.msg,
+                type: 'error'
+            });
+        }
+    }
 </script>
 
 <template>
