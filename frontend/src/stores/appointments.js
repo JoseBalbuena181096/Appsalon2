@@ -119,6 +119,24 @@ export const useAppointmentsStore = defineStore('appointments', () => {
         appointmentId.value = '';
     }
 
+    async function cancelAppointment(id){
+        if(confirm('¿Estas seguro de cancelar la cita?')){
+            try {
+                const {data} = await AppointmentAPI.delete(id);
+                toast.open({
+                    message: data.msg,
+                    type: 'success'
+                });
+                user.userAppointments = user.userAppointments.filter(appointment => appointment._id !== id);
+            } catch (error) {
+                toast.open({
+                    message: error.response.data.msg,
+                    type: 'error'
+                });
+            } 
+        }
+    }
+
     const isServiceSelected = computed(() => {
         return id => services.value.some(service => service._id === id);
     });
@@ -155,7 +173,8 @@ export const useAppointmentsStore = defineStore('appointments', () => {
         isDateSelected,
         disableTime,
         setSelectedAppointment,
-        clearAppointmentData
+        clearAppointmentData,
+        cancelAppointment
     }    
 });
 

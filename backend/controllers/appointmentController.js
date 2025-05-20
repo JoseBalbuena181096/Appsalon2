@@ -133,9 +133,47 @@ const updateAppointment = async (req, res) => {
     }
 }
 
+const deleteAppointment = async (req, res) => {
+    const {id} = req.params;
+    
+    // validar por ObjectId
+    if(validateObjectId(id, res)) return;
+
+    // validar que exista
+    const appointment = await Appointment.findById(id);
+    if(!appointment){
+        return handleNotFoundError('La cita no existe', res);
+    }
+
+    if(appointment.user.toString() !== req.user._id.toString()){
+        const error = new Error('Acceso denegado');
+        return res.status(403).json({
+            msg: error.message
+        });
+    }
+
+    // eliminar la cita
+    try {
+        await appointment.deleteOne();
+        res.status(200).json({
+            ok: true,
+            msg: 'Cita eliminada correctamente'
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Error al eliminar la cita',
+            error: error.message
+        });
+    }
+}
+
+
 export {
     createAppointment,
     getAppointmentsByDate,
     getAppointmentById,
-    updateAppointment
+    updateAppointment,
+    deleteAppointment
 }
