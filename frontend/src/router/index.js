@@ -97,8 +97,13 @@ router.beforeEach(async (to, from, next) => {
     if(requiresAuth){
       try {
         const {data} = await AuthAPI.auth();
-        next();
-                
+        
+        if(data.admin){
+          next('/admin');
+        }
+        else{
+          next();
+        }         
       } catch (error) {
         console.log(error);
         next({name: 'login'});

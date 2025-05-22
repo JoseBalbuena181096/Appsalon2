@@ -135,10 +135,6 @@ const forgotPassword = async(req, res) => {
     }
 }
 
-const user = async(req, res) => {
-    const {user} = req;
-    res.json(user);  
-}
 
 const verifyPasswordResetToken = async(req, res) => {
     const {token} = req.params;
@@ -177,6 +173,25 @@ const updatePassword = async(req, res) => {
     }
 }
 
+const user = async(req, res) => {
+    const {user} = req;
+    res.json(user);  
+}
+
+
+const admin = async(req, res) => {
+    const {user} = req;
+    console.log(user);
+    if(!user.admin){
+        const error = new Error('Acción no autorizada');
+        return res.status(403).json({
+            msg: error.message
+        });
+    }
+    res.json(user);  
+}
+
+
 export {
     register,
     verifyAccount,
@@ -184,5 +199,6 @@ export {
     user,
     forgotPassword,
     verifyPasswordResetToken,
-    updatePassword
+    updatePassword,
+    admin
 }
