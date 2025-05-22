@@ -1,8 +1,10 @@
 <script setup>
     import AuthAPI from '../../api/AuthAPI';
     import {inject} from 'vue';
-    const toast = inject('toast');
+    import {reset} from '@formkit/core';
 
+
+    const toast = inject('toast');
 
     const handleSubmit = async ({email}) => {
         try {
@@ -12,6 +14,7 @@
                 message: data.msg,
                 type: 'success'
             });
+            reset('forgotPasswordForm');
         } catch (error) {
             console.log(error);
             toast.open({
