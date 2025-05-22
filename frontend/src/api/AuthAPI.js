@@ -19,8 +19,8 @@ export default {
     verifyPasswordResetToken(token){
         return api.get(`/auth/forgot-password/${token}`);
     },
-    updatePassword(data){
-        return api.post('/auth/forgot-password', data);
+    updatePassword(token, data){
+        return api.post(`/auth/forgot-password/${token}`, data);
     }
 }
 
