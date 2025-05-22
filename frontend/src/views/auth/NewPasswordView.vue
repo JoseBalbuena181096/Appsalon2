@@ -20,7 +20,11 @@
             });
         }
     });
-    
+
+    const handleSubmit = async ({password}) => {
+        console.log(password);
+    }
+
 </script>
 
 <template>
@@ -38,7 +42,7 @@
     type="form"
     :actions="false"
     incomplete-message="No se pudo enviar, revisa las notificaciones"
-    @submit=""
+    @submit="handleSubmit"
    >
     
     <FormKit
