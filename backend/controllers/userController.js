@@ -10,12 +10,21 @@ const getUserAppointments = async (req, res) => {
         });
     }
     try {
-        const appointments = await Appointment.find({
+        const query = req.user.admin ?
+        {
+            date: {
+                $gte: new Date()
+            }
+        } : 
+        {
             user: req.user._id.toString(),
             date: {
                 $gte: new Date()
             }
-        }).populate('services').sort({date: 'asc'});
+        } ;
+        
+        const appointments = await Appointment
+            .find(query).populate('services').sort({date: 'asc'});
         res.status(200).json(appointments);
     } catch (error) {
         console.log(error);
